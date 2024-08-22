@@ -48,4 +48,12 @@ public class PrimeFinder {
         }
         return quantity;
     }
+
+    public boolean threadsAlive(){
+        boolean allAlive = false;
+        for (int i = 0; i < numThreads; i++){
+            allAlive = allAlive || threads.get(i).isAlive();
+        }
+        return allAlive;
+    }
 }
