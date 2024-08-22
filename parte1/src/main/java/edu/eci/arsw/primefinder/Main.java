@@ -1,13 +1,22 @@
 package edu.eci.arsw.primefinder;
 
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Main {
 
 	public static void main(String[] args) {
 		
-		PrimeFinderThread pft=new PrimeFinderThread(0, 30000000);
-		
-		pft.start();
-		
+		PrimeFinder pft = new PrimeFinder();
+		List<Integer> primesInFiveSeconds = pft.findPrimes(0, 30000000, 3);
+		System.out.println("These are the prime numbers found in 5 seconds: " + primesInFiveSeconds);
+		System.out.println("Keep finding primes? (Enter for Yes): ");
+		Scanner scanner	= new Scanner(System.in);
+		scanner.nextLine();
+		pft.continueFinding();
 		
 	}
 	

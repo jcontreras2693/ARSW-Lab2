@@ -1,30 +1,37 @@
 package edu.eci.arsw.primefinder;
 
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class PrimeFinderThread extends Thread{
 
 	
-	int a,b;
+	int a, b;
+	Object lock;
 	
-	private List<Integer> primes=new LinkedList<Integer>();
-	
-	public PrimeFinderThread(int a, int b) {
+	private List<Integer> primes = new LinkedList<Integer>();
+
+	public PrimeFinderThread(int a, int b, Object lock) {
 		super();
 		this.a = a;
 		this.b = b;
+		this.lock = lock;
 	}
 
 	public void run(){
-		for (int i=a;i<=b;i++){						
+		long timeStart = System.currentTimeMillis();
+		for (int i=a;i<=b;i++){
+			if (System.currentTimeMillis() - timeStart >= 1000) {
+				pause();
+				timeStart = System.currentTimeMillis();
+			}
 			if (isPrime(i)){
 				primes.add(i);
 				System.out.println(i);
 			}
 		}
-		
-		
 	}
 	
 	boolean isPrime(int n) {
@@ -40,7 +47,15 @@ public class PrimeFinderThread extends Thread{
 		return primes;
 	}
 	
-	
+	private void pause(){
+		synchronized (lock){
+			try {
+				lock.wait();
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
 	
 	
 }
