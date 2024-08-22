@@ -9,9 +9,9 @@ public class PrimeFinder {
     int a, b, numThreads;
     Object lock = new Object();
     ArrayList<PrimeFinderThread> threads = new ArrayList<PrimeFinderThread>();
-    ArrayList<Integer> primesFound = new ArrayList<Integer>();
+    private List<Integer> primes = new LinkedList<Integer>();
 
-    public List<Integer> findPrimes(int a, int b, int numThreads){
+    public void findPrimes(int a, int b, int numThreads){
         this.a = a;
         this.b = b;
         this.numThreads = numThreads;
@@ -19,18 +19,33 @@ public class PrimeFinder {
         int range = b / numThreads;
         int end = range;
 
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < numThreads; i++){
             threads.add(new PrimeFinderThread(start, end, lock));
             threads.get(i).start();
             start = end + 1;
             end += range;
         }
 
-        return primesFound;
-
     }
 
     public void continueFinding(){
-        lock.notifyAll();
+        synchronized (lock) {
+            lock.notifyAll();
+        }
+    }
+
+    public List<Integer> getPrimes(){
+        for (int i = 0; i < numThreads; i++){
+            primes.addAll(threads.get(i).getPrimes());
+        }
+        return primes;
+    }
+
+    public int getNumberOfPrimes(){
+        int quantity = 0;
+        for (int i = 0; i < numThreads; i++){
+            quantity += threads.get(i).getNumberOfPrimes();
+        }
+        return quantity;
     }
 }

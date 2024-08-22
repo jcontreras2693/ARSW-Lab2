@@ -9,15 +9,25 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-		
+
 		PrimeFinder pft = new PrimeFinder();
-		List<Integer> primesInFiveSeconds = pft.findPrimes(0, 30000000, 3);
-		System.out.println("These are the prime numbers found in 5 seconds: " + primesInFiveSeconds);
+		pft.findPrimes(0, 30000000, 3);
+
+		try {
+			Thread.sleep(5500);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+
+		int primesInFiveSeconds = pft.getNumberOfPrimes();
+		System.out.println("Prime numbers found in 5 seconds: " + primesInFiveSeconds);
 		System.out.println("Keep finding primes? (Enter for Yes): ");
+		System.out.flush();
+
 		Scanner scanner	= new Scanner(System.in);
 		scanner.nextLine();
 		pft.continueFinding();
-		
+
 	}
-	
+
 }
