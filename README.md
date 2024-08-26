@@ -56,23 +56,34 @@ Taller.
     dichas inconsistencias). A partir de esto, identifique las regiones
     críticas () del programa.
 
+- El problema que ocurre está relacionado al orden de llegada de los galgos, parece ser que varios hilos están accediendo a la variabale al mismo tiempo lo que genera que varios galgos queden registrados con las mismas posiciones.
+
 3.  Utilice un mecanismo de sincronización para garantizar que a dichas
     regiones críticas sólo acceda un hilo a la vez. Verifique los
     resultados.
+
+![](./img/media/parte2.3.png)
 
 4.  Implemente las funcionalidades de pausa y continuar. Con estas,
     cuando se haga clic en ‘Stop’, todos los hilos de los galgos
     deberían dormirse, y cuando se haga clic en ‘Continue’ los mismos
     deberían despertarse y continuar con la carrera. Diseñe una solución que permita hacer esto utilizando los mecanismos de sincronización con las primitivas de los Locks provistos por el lenguaje (wait y notifyAll).
 
+- Pausa
+
+![](./img/media/parte2.pausa.png)
+
+- Continuar
+
+![](./img/media/parte2.continuar.png)
 
 ## Criterios de evaluación
 
 1. Funcionalidad.
 
     1.1. La ejecución de los galgos puede ser detenida y resumida consistentemente.
-    
-    1.2. No hay inconsistencias en el orden de llegada registrado.
+
+1.2. No hay inconsistencias en el orden de llegada registrado.
     
 2. Diseño.   
 
@@ -80,3 +91,5 @@ Taller.
     
     2.2. Los galgos, cuando están suspendidos, son reactivados son sólo un llamado (usando un monitor común).
 
+
+### Juan David Contreras Becerra | ARSW
